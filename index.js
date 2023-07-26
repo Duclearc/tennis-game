@@ -16,13 +16,17 @@ class Game {
 
     scores = ["love", "15", "30", "40"];
     scoreboard = 'love - love';
-    
+
     getScoreboard() {
         return this.scoreboard;
     }
 
     updateScoreboard() {
-        return `${this.scores[player1.score]} - ${this.scores[player2.score]}`
+        if (this.player1.score >= 4) {
+            this.scoreboard = "player one wins";
+        } else {
+            this.scoreboard = `${this.scores[player1.score]} - ${this.scores[player2.score]}`
+        }
     }
 }
 
@@ -33,5 +37,7 @@ const game = new Game(player1, player2);
 
 module.exports = {
     player: new Player(0),
-    game
+    game,
+    Player,
+    Game
 }
