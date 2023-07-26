@@ -3,7 +3,9 @@ class Player {
         this.score = score
     }
 
-    scorePoint() {}
+    scorePoint() {
+        this.score++;
+    }
 }
 
 class Game {
@@ -12,9 +14,15 @@ class Game {
         this.player2 = player2;
     }
 
+    scores = ["love", "15", "30", "40"];
     scoreboard = 'love - love';
+    
     getScoreboard() {
         return this.scoreboard;
+    }
+
+    updateScoreboard() {
+        return `${this.scores[player1.score]} - ${this.scores[player2.score]}`
     }
 }
 
