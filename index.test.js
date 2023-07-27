@@ -35,12 +35,12 @@ describe("Tennis Game Initial Setting", () => {
     expect(game.player2.score).toBe(0);
   });
 
-  test('game starts with score "love - love"', () => {
+  test("game starts with score 'love - love'", () => {
     expect(game.scoreboard).toBe("love - love");
   });
 });
 
-describe("Tennis Game Scores", () => {
+describe("Tennis Game Regular Scoring", () => {
   test("player successfully scores a point", () => {
     player.scorePoint();
     expect(player.score).toBe(1);
@@ -53,28 +53,56 @@ describe("Tennis Game Scores", () => {
     expect(player.score).toBe(2);
   });
 
-  test('player one scores, scoreboard shows "15 - love"', () => {
+  test("player one scores, scoreboard shows '15 - love'", () => {
     const game = setGameScore(1);
     expect(game.getScoreboard()).toBe("15 - love");
   });
 
-  test('player two scores, scoreboard shows "15 - 15"', () => {
+  test("player two scores, scoreboard shows '15 - 15'", () => {
     const game = setGameScore(1, 1);
     expect(game.getScoreboard()).toBe("15 - 15");
   });
 
-  test('player one wins (not in advantage), scoreboard shows "player one wins"', () => {
+  test("player one wins (not in advantage), scoreboard shows 'player one wins'", () => {
     const game = setGameScore(4, 0);
     expect(game.getScoreboard()).toBe("player one wins");
   });
 
-  test('player two wins (not in advantage), scoreboard shows "player two wins"', () => {
+  test("player two wins (not in advantage), scoreboard shows 'player two wins'", () => {
     const game = setGameScore(0, 4);
     expect(game.getScoreboard()).toBe("player two wins");
   });
+});
 
+describe("Tennis Game 'Advantage' Scoring", () => {
   test("game is deuce", () => {
     const game = setGameScore(4, 4);
     expect(game.getScoreboard()).toBe("deuce");
+  });
+
+  test("player one advantage", () => {
+    const game = setGameScore(4, 4); // game is deuce
+    game.playerOneScores();
+    expect(game.getScoreboard()).toBe("player one advantage");
+  });
+
+  test("player two advantage", () => {
+    const game = setGameScore(4, 4); // game is deuce
+    game.playerTwoScores();
+    expect(game.getScoreboard()).toBe("player two advantage");
+  });
+
+  test("player one wins (in advantage), scoreboard shows 'player one wins'", () => {
+    const game = setGameScore(4, 4); // game is deuce
+    game.playerOneScores(); // player one has advantage
+    game.playerOneScores(); // player one wins
+    expect(game.getScoreboard()).toBe("player one wins");
+  });
+
+  test("player two wins (in advantage), scoreboard shows 'player two wins'", () => {
+    const game = setGameScore(4, 4); // game is deuce
+    game.playerTwoScores(); // player two has advantage
+    game.playerTwoScores(); // player two wins
+    expect(game.getScoreboard()).toBe("player two wins");
   });
 });
